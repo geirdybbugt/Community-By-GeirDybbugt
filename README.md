@@ -13,12 +13,18 @@ Content available:
 
 # Office 365
 |—-Script to download and install latest version via the Office Deployment tool (Click to run)
+<br>
+<i>Remember to input your XML file in the script<i>
 # FSLogix
 |—-Script to download and install latest version+removes the memberships for the default everyone group after install
+ <br>
+ <i>also removes the default everyone group from the include group for Profile containers and office 365 containers<i>
 # Microsoft Active Directory
 |—-Creating a default OU structure via Powershell 
 <br>
 |—-Bulk creating security groups
+ <br>
+ <i>Handy for repetetive/recurring task when combined with i.e the "Creating a default OU structure via Powershell" script found above. <i>
 # Microsoft Group Policy
 |—-Create, link, and import a settings to the policy from a backup
 # Microsoft DNS
