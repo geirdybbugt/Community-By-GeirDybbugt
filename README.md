@@ -1,17 +1,13 @@
 # Collection of Powershell scripts
 also available via https://dybbugt.no/fieldnotes/powershell/
  
- Here you will find various powershell scripts/commands that can be useful in various circumstances.
+Here you will find various powershell scripts/commands that can be useful in various circumstances.
 The content list below show the current available scripts for you to find.
 
 I will add more as I make them, and if they are suited to be generalized and made available to others.
-If I find some useful scripts elsewhere, I will add thos aswell – with notes on who is the creator.
-
-I will try to keep this updated regularly, and post updates in the Changelog below.
+If I find some useful scripts elsewhere, I will add those aswell – with notes on who is the creator.
 
 Hope you find the content useful.
-
-PS: The links in the content list below are there for you to jump to the wanted subject, and will open in a new tab.
 
 Content available:
 
