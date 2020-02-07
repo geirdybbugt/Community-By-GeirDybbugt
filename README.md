@@ -16,7 +16,8 @@ Content available:
 # FSLogix
 |—-Script to download and install latest version+removes the memberships for the default everyone group after install
 # Microsoft Active Directory
-|—-Creating a default OU structure via Powershell
+|—-Creating a default OU structure via Powershell 
+<br>
 |—-Bulk creating security groups
 # Microsoft Group Policy
 |—-Create, link, and import a settings to the policy from a backup
@@ -24,7 +25,9 @@ Content available:
 |—- Creating DNS records with powershell
 # Citrix
 |—-Script to download and install latest version of Citrix Workspace/Receiver.
+<br>
 |—-Script to set Citrix Files desktop app config defaults
 # Windows 10
 |—-Script to set wallpaper and lockscreen on Windows 10 clients
+<br>
 |—-Script to uninstall preinstalled APPX packages on Windows 10
