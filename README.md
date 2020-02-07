@@ -24,14 +24,14 @@ Content available:
 <br>
 **|—-Bulk creating security groups**
 <br>
-*Handy for repetetive/recurring task when combined with i.e the "Creating a default OU structure via Powershell" script found above.*
+*Handy for repetetive/recurring task when combined with i.e the **"Creating a default OU structure via Powershell"** script found above.*
 # Microsoft Group Policy
 **|—-Create, link, and import a settings to the policy from a backup**
 <br>
 *This was initially created to ease repetetive task when setting up a Citrix deployment where the structure and "default" policy was something that always where the same. 
 It has been generalized and changed to be put available for you here, and serves just for you to build upon yourself.
 <br>
-For simplicity, the below script is using the paths and variables from the script "Creating a default OU structure via Powershell" under the Active Directory areaon this website.*
+For simplicity, the below script is using the paths and variables from the script **"Creating a default OU structure via Powershell"** under the Active Directory areaon this website.*
 # Microsoft DNS
 **|—- Creating DNS records with powershell**
 <br>
