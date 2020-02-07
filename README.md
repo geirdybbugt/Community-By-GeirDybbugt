@@ -16,7 +16,7 @@ Content available:
 <br>
 *Remember to input your XML file in the script*
 # FSLogix
-**|—-Script to download and install latest version+removes the memberships for the default everyone group after install**
+**|—-Script to download and install latest version**
  <br>
 *also removes the default everyone group from the include group for Profile containers and office 365 containers*
 # Microsoft Active Directory
