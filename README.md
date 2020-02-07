@@ -23,6 +23,7 @@ Content available:
 **|—-Creating a default OU structure via Powershell**
 <br>
 **|—-Bulk creating security groups**
+<br>
 *Handy for repetetive/recurring task when combined with i.e the "Creating a default OU structure via Powershell" script found above.*
 # Microsoft Group Policy
 **|—-Create, link, and import a settings to the policy from a backup**
