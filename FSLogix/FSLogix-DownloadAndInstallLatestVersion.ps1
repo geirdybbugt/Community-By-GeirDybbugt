@@ -13,8 +13,7 @@
 
     #Creating Subfolders
     MD $FSLogixDestination -force
-    MD $Office365Destination -force
-
+    
 #FSLogix recent version
 
     #Downloading source file
