@@ -15,6 +15,10 @@ Content available:
 **|—-Script to download and install latest version via the Office Deployment tool (Click to run)**
 <br>
 *Remember to input your XML file in the script*
+# OneDrive
+**|—-Scripts to deploy with intune to configure OneDrive for Business with Known Folder management silently**
+<br>
+*View comments in the individual scripts for deployment instructions for Intune*
 # FSLogix
 **|—-Script to download and install latest version**
  <br>
