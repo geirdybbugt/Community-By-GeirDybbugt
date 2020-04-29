@@ -23,6 +23,14 @@ Content available:
 **|—-Script to download and install latest version**
  <br>
 *also removes the default everyone group from the include group for Profile containers and office 365 containers*
+# Microsoft Edge
+**|—-Script to download and install latest version**
+ <br>
+*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop
+# Microsoft Teams
+**|—-Script to download and install latest version**
+ <br>
+*Downloads and install Microsoft Teams x64 for VDI*
 # Microsoft Active Directory
 **|—-Creating a default OU structure via Powershell**
 <br>
