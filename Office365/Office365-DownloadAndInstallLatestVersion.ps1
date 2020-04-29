@@ -43,6 +43,13 @@
     .\setup.exe /download "$Office365xmlSourceFiles"
 	.\setup.exe /configure "$Office365xmlSourceFiles"
     cd \
+
+#Removing scheduled tasks
+    $Office365ScheduledTasks = "Office Automatic Updates 2.0","Office Feature Updates","Office Feature Updates Logon"
+    ForEach ($Task in $Office365ScheduledTasks)
+    {
+    Unregister-ScheduledTask -TaskName $Task -Confirm:$false
+    }
         
 #Cleaning up downloaded files
     start-sleep -Seconds 10
