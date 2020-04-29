@@ -40,8 +40,8 @@
     ## start installation
 
     cd $Office365Destination
-    .\setup.exe /download .\DefaultConfiguration.xml
-	.\setup.exe /configure .\DefaultConfiguration.xml
+    .\setup.exe /download "$Office365xmlSourceFiles"
+	.\setup.exe /configure "$Office365xmlSourceFiles"
     cd \
         
 #Cleaning up downloaded files
