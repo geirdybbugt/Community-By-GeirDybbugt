@@ -26,7 +26,7 @@ Content available:
 # Microsoft Edge
 **|—-Script to download and install latest version**
  <br>
-*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop
+*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop*
 # Microsoft Teams
 **|—-Script to download and install latest version**
  <br>
