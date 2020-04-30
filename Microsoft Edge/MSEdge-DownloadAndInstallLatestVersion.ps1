@@ -20,7 +20,7 @@
     
     #Getting the download url  from MS API site (https://edgeupdates.microsoft.com/api/products?view=enterprise)
     $APIURL = Invoke-restmethod "https://edgeupdates.microsoft.com/api/products"
-    $EdgeDownloadLink = $WebResponse.Releases | Select-Object -ExpandProperty Artifacts | Where location -Like "*MicrosoftEdgeEnterpriseX64.msi*" | Select-Object -ExpandProperty location 
+    $EdgeDownloadLink = $APIURL.Releases | Select-Object -ExpandProperty Artifacts | Where location -Like "*MicrosoftEdgeEnterpriseX64.msi*" | Select-Object -ExpandProperty location 
     
     #Downloading source file
     Start-BitsTransfer -Source "$EdgeDownloadLink" -Destination "$EdgeDestination\MicrosoftEdgeEnterpriseX64.msi"
