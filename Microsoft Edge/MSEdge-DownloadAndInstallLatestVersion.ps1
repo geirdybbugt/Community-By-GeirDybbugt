@@ -34,8 +34,6 @@
     Start-Sleep -Seconds 5
     }
 
-    test-path -path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge"
-
 #For Citrix! - add MSEdge to UviProcessExcludes to prevent Citrix API hooks from latching on to MS Edge process
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/
         $RegPath = "HKLM:SYSTEM\CurrentControlSet\services\CtxUvi"
