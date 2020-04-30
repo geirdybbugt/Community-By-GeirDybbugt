@@ -7,6 +7,7 @@
 #Variables
     $Masterdestination = "$env:APPDATA\DybbugtNO-Files"
     $EdgeDestination = "$Masterdestination\MSEdge"
+    $EdgeRegistry = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge"
 
 #Folder Structure
 
@@ -27,6 +28,13 @@
 
     #Installing//Updating Microsoft Edge for Business
     MSIEXEC /i "$EdgeDestination\MicrosoftEdgeEnterpriseX64.msi" /qn DONOTCREATEDESKTOPSHORTCUT=TRUE
+
+    #Waiting for installation to complete
+    while (-not (Test-Path -Path $EdgeRegistry)) {
+    Start-Sleep -Seconds 5
+    }
+
+    test-path -path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Microsoft Edge"
 
 #For Citrix! - add MSEdge to UviProcessExcludes to prevent Citrix API hooks from latching on to MS Edge process
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/

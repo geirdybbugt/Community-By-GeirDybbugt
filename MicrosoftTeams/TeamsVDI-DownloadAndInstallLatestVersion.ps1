@@ -24,14 +24,9 @@ $TeamsDestination = "$Masterdestination\Teams"
  #start installation
     cd $TeamsDestination
     msiexec /i "$TeamsDestination\teams_windows_x64.msi" ALLUSER=1 ALLUSERS=1
+    cd \
  
   #Cleaning up downloaded files
     start-sleep -Seconds 10
     remove-item $TeamsDestination -recurse -Force
     remove-item $Masterdestination -recurse -Force
-
-    #Remove Teams from wow6432node run key
-    Remove-ItemProperty -name Teams -path "HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run"
-
-    # Remove Microsoft Teams shortcut on Public Desktop
-    Remove-Item -Path "$env:PUBLIC\Desktop\Microsoft Teams.lnk"

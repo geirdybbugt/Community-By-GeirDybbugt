@@ -6,6 +6,8 @@
 #Variables
     $Masterdestination = "$env:APPDATA\DybbugtNO-Files"
     $OneDriveDestination = "$Masterdestination\OneDrive"
+    $OneDriveRegistry = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"
+
 
 #Folder Structure
 
@@ -24,12 +26,15 @@
     Start-BitsTransfer -Source $OneDriveDownload -Destination "$OneDriveDestination\OneDriveSetup.exe"
 
     ## start installation
-
     cd $OneDriveDestination
     .\OneDriveSetup.exe /allusers
 	cd \
-    start-sleep -Seconds 10
-
+    
+    #Waiting for installation to complete
+    while (-not (Test-Path -Path $OneDriveRegistry)) {
+    Start-Sleep -Seconds 5
+    }
+    
 #Post install script
 
     #Removing scheduled tasks
@@ -40,6 +45,6 @@
         }
         
     #Cleaning up downloaded files
-        start-sleep -Seconds 5
+        start-sleep -Seconds 10
         Remove-Item $OneDriveDestination -Recurse -Force
         remove-item $Masterdestination -recurse -Force
