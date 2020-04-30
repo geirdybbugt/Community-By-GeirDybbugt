@@ -32,3 +32,6 @@ $TeamsDestination = "$Masterdestination\Teams"
 
     #Remove Teams from wow6432node run key
     Remove-ItemProperty -name Teams -path "HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run"
+
+    # Remove Microsoft Teams shortcut on Public Desktop
+    Remove-Item -Path "$env:PUBLIC\Desktop\Microsoft Teams.lnk"
