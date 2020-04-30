@@ -28,6 +28,7 @@
     cd $OneDriveDestination
     .\OneDriveSetup.exe /allusers
 	cd \
+    start-sleep -Seconds 10
 
 #Post install script
 
@@ -39,6 +40,6 @@
         }
         
     #Cleaning up downloaded files
-        start-sleep -Seconds 10
+        start-sleep -Seconds 5
         Remove-Item $OneDriveDestination -Recurse -Force
         remove-item $Masterdestination -recurse -Force

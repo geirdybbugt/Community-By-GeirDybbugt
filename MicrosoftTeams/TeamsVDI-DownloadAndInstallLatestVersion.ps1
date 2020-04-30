@@ -29,3 +29,6 @@ $TeamsDestination = "$Masterdestination\Teams"
     start-sleep -Seconds 10
     remove-item $TeamsDestination -recurse -Force
     remove-item $Masterdestination -recurse -Force
+
+    #Remove Teams from wow6432node run key
+    Remove-ItemProperty -name Teams -path "HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run"
