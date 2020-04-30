@@ -19,6 +19,9 @@ Content available:
 **|—-Scripts to deploy with intune to configure OneDrive for Business with Known Folder management silently**
 <br>
 *View comments in the individual scripts for deployment instructions for Intune*
+**|—-Script to download and install latest version**
+<br>
+*Downloads and install latest with Alluser switch, and unregister update tasks*
 # FSLogix
 **|—-Script to download and install latest version**
  <br>
