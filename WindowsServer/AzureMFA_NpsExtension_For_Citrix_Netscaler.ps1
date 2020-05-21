@@ -73,9 +73,9 @@
         & "C:\Program Files\Microsoft\AzureMfa\Config\AzureMfaNpsExtnConfigSetup.ps1"
         
 
-#Start konfig av NPS Server
+#Start NPS server config
 
-    #Hent filer fra Azure med Dummy config
+    #Fetch NPS-Dummy export file
         Start-BitsTransfer -Source "$DummyFileWebLocation" -Destination "$NPSDummyDestination\NPS-Dummy.xml"
             
     #Customize NPS-Dummy XML File
