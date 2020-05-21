@@ -10,6 +10,8 @@
 #### Failure to do so, may result in MFA prompts for other services on the same server
 #### 
 #### Azure MFA documentation source: https://docs.microsoft.com/en-us/azure/active-directory/authentication/howto-mfa-nps-extension
+#### 
+#### PS: need to run as Administrator
 ####------------------------------------------------------------------------####
 
 #Require admin rights
