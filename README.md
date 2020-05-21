@@ -34,6 +34,11 @@ Content available:
 **|—-Script to download and install latest version**
  <br>
 *Downloads and install Microsoft Teams x64 for VDI*
+# Windows Server
+**|—-Script to install a fresh NPS server used with the Azure MFA extension**
+*Will install NPS role, download and install Azure MFA extension, then give you promts underway for input.*
+*PS: I tend to but Radius behind LoadBalancers on NetScaler/ADC, therefore the SNIP is used. If no LoadBalancing input NSIP instead*
+<br>
 # Microsoft Active Directory
 **|—-Creating a default OU structure via Powershell**
 <br>
