@@ -85,8 +85,8 @@
 
     #Customize NPS XML file
         (Get-Content "$NPSDummyDestination\NPS-DUMMY.xml").replace('#IP-SNIP#', "$IPSNIP") | Set-Content "$NPSDummyDestination\NPS-DUMMY.xml"
-        (Get-Content "$NPSDummyDestination\NPS-DUMMY.xml").replace('#SharedSecret#', "$IPNPSSERVER") | Set-Content "$NPSDummyDestination\NPS-DUMMY.xml"
-        (Get-Content "$NPSDummyDestination\NPS-DUMMY.xml").replace('#IP-NPS-Server#', "$RadiusSharedSecret") | Set-Content "$NPSDummyDestination\NPS-DUMMY.xml"
+        (Get-Content "$NPSDummyDestination\NPS-DUMMY.xml").replace('#SharedSecret#', "RadiusSharedSecret") | Set-Content "$NPSDummyDestination\NPS-DUMMY.xml"
+        (Get-Content "$NPSDummyDestination\NPS-DUMMY.xml").replace('#IP-NPS-Server#', "$IPNPSSERVER") | Set-Content "$NPSDummyDestination\NPS-DUMMY.xml"
 
             #Customizing done!
             Write-Host "XML customizing done!" 
