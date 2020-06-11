@@ -30,14 +30,17 @@ sleep 10
 #Location for the JSON config file for Citrix Files
 $JSON = "$env:appdata\Citrix\Citrix Files\users.json"
 
-#Set recipient to require login as default
-(Get-Content $JSON).replace('"Send_RequireRecipientLogin":false', '"Send_RequireRecipientLogin":true') | Set-Content $JSON
+#Set new defaults
+#PS: 'null' is the default value after fresh install, if they have been manually changed by user, the value is true or false, adapt accordingly
 
-#Set Encrypted email as default
-(Get-Content $JSON).replace('"Send_EncryptEmail":false', '"Send_EncryptEmail":true') | Set-Content $JSON
+    #Set recipient to require login as default
+    (Get-Content $JSON).replace('"Send_RequireRecipientLogin":null', '"Send_RequireRecipientLogin":true') | Set-Content $JSON
 
-#Set Default expiration for links to 6 months (value in days) PS: "-1"  is default for "never"
-(Get-Content $JSON).replace('"Send_Expiration":-1', '"Send_Expiration":180') | Set-Content $JSON
+    #Set Encrypted email as default
+    (Get-Content $JSON).replace('"Send_EncryptEmail":null', '"Send_EncryptEmail":true') | Set-Content $JSON
+
+    #Set Default expiration for links to 6 months (value in days) PS: "-1"  is default for "never"
+    (Get-Content $JSON).replace('"Send_Expiration":null', '"Send_Expiration":180') | Set-Content $JSON
 
 #Start Citrix Files after change
 start-process "C:\Program Files\Citrix\Citrix Files\CitrixFiles.exe"
