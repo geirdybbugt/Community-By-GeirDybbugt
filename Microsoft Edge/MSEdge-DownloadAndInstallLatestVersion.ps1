@@ -20,6 +20,10 @@
 #Microsoft Edge for Business Latest Stable Version
     
     #Getting the download url  from MS API site (https://edgeupdates.microsoft.com/api/products?view=enterprise)
+
+		#Set TLS protocol type
+		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+	
     $APIURL = Invoke-restmethod "https://edgeupdates.microsoft.com/api/products"
     $EdgeDownloadLink = $APIURL.Releases | Select-Object -ExpandProperty Artifacts | Where location -Like "*MicrosoftEdgeEnterpriseX64.msi*" | Select-Object -ExpandProperty location 
     
