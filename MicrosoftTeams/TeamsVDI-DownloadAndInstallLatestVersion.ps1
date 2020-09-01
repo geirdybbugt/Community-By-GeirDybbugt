@@ -25,6 +25,8 @@ $TeamsDestination = "$Masterdestination\Teams"
     cd $TeamsDestination
     msiexec /i "$TeamsDestination\teams_windows_x64.msi" ALLUSER=1 ALLUSERS=1
     cd \
+	# Remove registry keys to stop Teams from autostarting
+	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"
  
   #Cleaning up downloaded files
     start-sleep -Seconds 10

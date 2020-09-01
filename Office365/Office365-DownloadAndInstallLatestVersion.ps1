@@ -14,6 +14,43 @@
 
     #Creating Subfolders
     MD $Office365Destination -force
+	
+#Windows search settings
+
+    #Set windows search to auto/start
+        $ServiceName = "WSearch"
+        Set-Service -Name $ServiceName -StartupType Automatic -Verbose
+    
+        #Disable Delayed Auto Start
+        Set-ItemProperty -Path "HKLM:SYSTEM\CurrentControlSet\Services\WSearch" -Name "DelayedAutoStart" -Value "0" -Verbose
+
+    #Limit Windows search to 1 cpu core
+        If (!(Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows Search" -Name "CoreCount"))
+        {
+        Write-Output "Windows Search registry fix" -Verbose
+        New-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\Windows Search" -Name "CoreCount" -Value "1" -Type DWORD -Verbose
+        }
+        else
+        {
+            Write-Output "Windows Search registry fix exists" -Verbose
+        }
+
+    #Make sure windows search service is running before install
+        $ServiceName = 'WSearch'
+        $arrService = Get-Service -Name $ServiceName
+
+        while ($arrService.Status -ne 'Running')
+        {
+            Start-Service $ServiceName
+            write-host $arrService.status
+            write-host 'Service starting'
+            Start-Sleep -seconds 5
+            $arrService.Refresh()
+            if ($arrService.Status -eq 'Running')
+            {
+                Write-Host 'Search Service is now Running'
+            }
+        }
 
 #Office 365 Click to run - most recent version
 
