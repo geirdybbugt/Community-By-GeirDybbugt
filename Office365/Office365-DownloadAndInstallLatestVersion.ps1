@@ -72,8 +72,9 @@
 
 #Select customization file if variable in top is not set 
 
-    IF([string]::IsNullOrEmpty($Office365xmlSourceFiles)) {  
+    IF([string]::IsNullOrEmpty($Office365xmlSourceFiles)) { 
         write-host "XML file not provided, opening file prompt.. " -ForegroundColor Cyan          
+        write-host "XML file can be created on the web here: 'https://config.office.com/deploymentsettings'" -ForegroundColor Yellow       
 	        $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{ 
 	        InitialDirectory = [Environment]::GetFolderPath('Desktop')
 	        Filter = 'XMLFile (*.xml)|*.xml'
