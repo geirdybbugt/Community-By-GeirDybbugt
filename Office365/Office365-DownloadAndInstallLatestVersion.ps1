@@ -56,7 +56,7 @@
 
 #Downloading source file
 
-    $Office365Download = ((Invoke-WebRequest -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=49117' ).Links | Where innerHTML -like "*click here to download manually*").href
+    $Office365Download = ((Invoke-WebRequest -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=49117' -UseBasicParsing).Links | Where outerHTML -like "*click here to download manually*").href
     Start-BitsTransfer -Source $Office365Download -Destination "$Office365Destination"
 
 #Extracting package
