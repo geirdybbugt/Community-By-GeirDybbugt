@@ -70,6 +70,27 @@
     Remove-Item $Office365Destination\$OfficeFilename -force
     remove-item $Office365Destination\*.xml -force
 
+#Select customization file if variable in top is not set 
+
+    IF([string]::IsNullOrEmpty($Office365xmlSourceFiles)) {  
+        write-host "XML file not provided, opening file prompt.. " -ForegroundColor Cyan          
+	        $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog -Property @{ 
+	        InitialDirectory = [Environment]::GetFolderPath('Desktop')
+	        Filter = 'XMLFile (*.xml)|*.xml'
+	        }
+            $FileBrowser.title = "Select your Office 365 XML configuration file" 
+            $result = $FileBrowser.showdialog()
+        If($result -eq "OK") {
+            $Office365xmlSourceFiles = $filebrowser.FileName
+            write-host "Configuration file selected is $Office365xmlSourceFiles" -ForegroundColor green
+            } else {
+                Write-host ""
+                Write-host "User aborted, stopping installation!" -ForegroundColor red
+                Write-host ""
+                break
+                }
+        } 
+
 #Get customization file
 
     Start-BitsTransfer -source "$Office365xmlSourceFiles" -Destination $Office365Destination
@@ -92,3 +113,4 @@
     start-sleep -Seconds 10
     Remove-Item $Office365Destination -Recurse -Force
     remove-item $Masterdestination -recurse -Force
+    write-host "Install completed" -ForegroundColor Cyan
