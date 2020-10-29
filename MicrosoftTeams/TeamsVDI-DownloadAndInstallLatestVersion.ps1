@@ -16,6 +16,10 @@ $TeamsDestination = "$Masterdestination\Teams"
 
     #Creating Subfolders
     MD $TeamsDestination -force
+	
+#Set TLS protocol type
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 
  #Downloading source file
     $TeamsDownload = ((Invoke-WebRequest -Uri 'https://docs.microsoft.com/en-us/microsoftteams/teams-for-vdi' -UseBasicParsing ).Links | where outerHTML -Like "*64-bit version*").href
