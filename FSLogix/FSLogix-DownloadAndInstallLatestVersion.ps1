@@ -72,6 +72,33 @@
     net localgroup "FSLogix ODFC Include List" everyone /delete
 
 
+# Windows search EventID2 workaround. Source: http://virtualwarlock.net/category/fslogix/
+    # Define CIM object variables
+    # This is needed for accessing the non-default trigger settings when creating a schedule task using Powershell
+    $Class = cimclass MSFT_TaskEventTrigger root/Microsoft/Windows/TaskScheduler
+    $Trigger = $class | New-CimInstance -ClientOnly
+    $Trigger.Enabled = $true
+    $Trigger.Subscription = "<QueryList><Query Id=`"0`" Path=`"Application`"><Select Path=`"Application`">*[System[Provider[@Name='Microsoft-Windows-Search-ProfileNotify'] and EventID=2]]</Select></Query></QueryList>"
+
+    # Define additional variables containing scheduled task action and scheduled task principal
+    $A = New-ScheduledTaskAction –Execute powershell.exe -Argument "Restart-Service Wsearch"
+    $P = New-ScheduledTaskPrincipal -UserId "NT AUTHORITY\SYSTEM" -LogonType ServiceAccount
+    $S = New-ScheduledTaskSettingsSet
+
+    # Cook it all up and create the scheduled task
+    $RegSchTaskParameters = @{
+        TaskName    = "Restart Windows Search Service on Event ID 2"
+        Description = "Restarts the Windows Search service on event ID 2"
+        TaskPath    = "\"
+        Action      = $A
+        Principal   = $P
+        Settings    = $S
+        Trigger     = $Trigger
+    }
+
+    Register-ScheduledTask @RegSchTaskParameters
+
+
 #Cleaning up downloaded files
     start-sleep -Seconds 10
     remove-item $FSLogixDestination -recurse -Force

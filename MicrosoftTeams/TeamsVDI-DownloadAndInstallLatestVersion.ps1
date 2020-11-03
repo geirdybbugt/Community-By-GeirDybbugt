@@ -27,10 +27,13 @@ $TeamsDestination = "$Masterdestination\Teams"
 
  #start installation
     cd $TeamsDestination
-    msiexec /i "$TeamsDestination\teams_windows_x64.msi" ALLUSER=1 ALLUSERS=1
+    start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams_windows_x64.msi`"  ALLUSER=1 ALLUSERS=1" -wait
     cd \
-	# Remove registry keys to stop Teams from autostarting
+    #Remove registry keys to stop Teams from autostarting
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"
+
+    #Remove shortcut public desktop
+    remove-item -Path "C:\Users\Public\Desktop\Microsoft Teams.lnk" -Force
  
   #Cleaning up downloaded files
     start-sleep -Seconds 10
