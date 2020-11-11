@@ -99,8 +99,8 @@
     ## start installation
 
     cd $Office365Destination
-    .\setup.exe /download "$Office365xmlSourceFiles"
-	.\setup.exe /configure "$Office365xmlSourceFiles"
+    .\setupodt.exe /download "$Office365xmlSourceFiles"
+	.\setupodt.exe /configure "$Office365xmlSourceFiles"
     cd \
 
 #For VDI: Removing scheduled tasks - PS!!: Remove if not deploying for VD/NonPersistent machines
