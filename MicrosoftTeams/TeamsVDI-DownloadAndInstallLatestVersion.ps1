@@ -23,11 +23,12 @@ $TeamsDestination = "$Masterdestination\Teams"
 
  #Downloading source file
     $TeamsDownload = ((Invoke-WebRequest -Uri 'https://docs.microsoft.com/en-us/microsoftteams/teams-for-vdi' -UseBasicParsing ).Links | where outerHTML -Like "*64-bit version*").href
-    Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination"
+    $TeamsDownload = $TeamsDownload -replace "&amp;","&"
+    Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
  #start installation
     cd $TeamsDestination
-    start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams_windows_x64.msi`"  ALLUSER=1 ALLUSERS=1" -wait
+    start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams.msi`"  ALLUSER=1 ALLUSERS=1" -wait
     cd \
     #Remove registry keys to stop Teams from autostarting
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"
