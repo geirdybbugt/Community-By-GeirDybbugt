@@ -55,7 +55,7 @@
         Start-BitsTransfer -Source "$NPSExtensionDownload" -Destination "$NPSDummyDestination\NpsExtnForAzureMfaInstaller.exe"
         
         #Install: Azure MFA NPS Extension
-            Start-Process -wait "NpsExtnForAzureMfaInstaller.exe" /quiet
+            Start-Process -wait "$NPSDummyDestination\NpsExtnForAzureMfaInstaller.exe" /quiet
 
 #Start NPS Extension Config
     
