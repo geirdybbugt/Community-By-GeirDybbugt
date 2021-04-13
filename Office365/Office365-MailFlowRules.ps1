@@ -1,5 +1,12 @@
 ﻿## Add some mail flow rules to 365
 
+# set powershell tls 1.2
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
+
+# install ex online module
+	Install-Module -Name ExchangeOnlineManagement
+
+
 # Connect to Exchange online
     Connect-ExchangeOnline
 
