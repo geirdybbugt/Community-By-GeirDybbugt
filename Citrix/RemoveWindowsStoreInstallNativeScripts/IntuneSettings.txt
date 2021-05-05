@@ -1,0 +1,14 @@
+Intune Detection Rule: 
+If check for 32 bit app on 64bit client:
+HKEY_LOCAL_MACHINE\SOFTWARE\\Microsoft\Windows\CurrentVersion\Uninstall\CitrixOnlinePluginPackWeb
+
+If no check for 32 bit app on 64 bit client:
+HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\CitrixOnlinePluginPackWeb
+DisplayVersion
+21.3.1.25  <<---- Modify as needed
+
+Intune install command:
+powershell.exe -noprofile -windowstyle hidden -executionpolicy bypass -file .\InstallReceiver.ps1
+
+Intune uninstall command:
+powershell.exe -noprofile -windowstyle hidden -executionpolicy bypass -file .\UninstallReceiver.ps1
