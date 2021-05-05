@@ -33,7 +33,7 @@
         else
         {
             echo "Running"
-            Stop-Process -processname "$process" -force
+            Stop-Process -processname "$process" -Verbose
         }
     }
 
@@ -44,6 +44,7 @@
     {
       Write-host "Uninstalling:" $app
       Get-AppxPackage -allusers $app | Remove-AppxPackage
+      Get-AppxPackage $app | Remove-AppxPackage
     }
 
 # adds registry configuration for Citrix Store
