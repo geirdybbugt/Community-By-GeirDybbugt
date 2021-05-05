@@ -33,7 +33,7 @@
         else
         {
             echo "Running"
-            Stop-Process -processname "$process" -Verbose
+            Stop-Process -processname "$process" -force
         }
     }
 
