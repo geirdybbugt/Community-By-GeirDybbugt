@@ -1,14 +1,11 @@
 ﻿####------------------------------------------------------------------------####
 #### Editor info: Geir Dybbugt - https://dybbugt.no
-#### Removes windows store receiver before installing latest native receiver
+#### Removes windows store receiver before installing native receiver
 #### modified:: 5/5/2021
 ####------------------------------------------------------------------------####
 <#
 .SYNOPSIS
     Removes windows store receiver, then downloads and installs native Citrix Receiver.
-    Remember to Edit store url and names before deploying
-    You can package the install and uninstall script as a win32 app with the IntuneWinAppUtil to deploy as a win32 app
-    Details for detectin rules and install commands are in the included txt file
     Intended to run via Intune.
 #>
 
@@ -24,24 +21,20 @@
     }
 
 # Stop Workspace klient
-    if ((get-process "Receiver" -ea SilentlyContinue) -eq $Null)
-    {
-        echo "Not Running"
-    }
-    else
-    {
-        echo "Running"
-        Stop-Process -processname "Receiver"
-    }
+    $processes = "*Receiver*", "*SelfService*", "*CtxWebBrowser*", "*SelfServicePlugin*", "*wfcrun32*", "*wfica32*","*wfcrun*","*wfica*", "*concentr*", "*authmansvr*"
 
-    if ((get-process "SelfService" -ea SilentlyContinue) -eq $Null)
+    Foreach ($process in $processes)
     {
-        echo "Not Running"
-    }
-    else
-    {
-        echo "Running"
-        Stop-Process -processname "SelfService"
+        Write-host "Checking process:" $process
+        if ((get-process "$process" -ea SilentlyContinue) -eq $Null)
+        {
+            echo "Not Running"
+        }
+        else
+        {
+            echo "Running"
+            Stop-Process -processname "$process" -Verbose
+        }
     }
 
 # Remove Windows store app
