@@ -59,5 +59,20 @@ until ($input -eq 'q')
 #  Block Attachements by type
     New-TransportRule -Name "Block Attachements by type" -AttachmentExtensionMatchesWords "vbs,rar,scr,dll,exe,obj,vxd,os2,w16,dos,com,pic,scr,cmd,bat" -SenderAddressLocation HeaderOrEnvelope -RejectMessageReasonText "Sorry your mail was blocked because it contained attachment types with executable content." -SetAuditSeverity Low -StopRuleProcessing $true -comments "Blocks the message if it includes an attachment with executable content defined by file extension" -Enabled $true
 
+
+#Block mail to default onmicrosoft domains.
+$UserCredential = Get-Credential $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection Import-PSSession $Session
+
+#Enter The Reject Message Text For End Users NDR Emails
+$RejectMessageTextOutbound = Read-Host Enter Outbound Reject Message Text, In Quotes 
+$RejectMessageTextInbound = Read-Host Enter Inbound Reject Message Text, In Quotes
+
+#Transport Rule To Block Outbound *.onmicrosoft.com emails
+New-TransportRule -name "Block Outbound OnMicrosoft.com Emails" -SenderDomainIs mail.onmicrosoft.com, onmicrosoft.com -RejectMessageEnhancedStatusCode 5.7.1 -RejectMessageReasonText $RejectMessageTextOutbound 
+New-TransportRule -name "Block Inbound OnMicrosoft.com Emails" -RecipientAddressContainsWords mail.onmicrosoft.com, onmicrosoft.com -RejectMessageEnhancedStatusCode 5.7.1 -RejectMessageReasonText $RejectMessageTextInbound
+
+#End The PowerShell Session
+Remove-pssession $Session
+
 # Disconnect to Exchange online
     disconnect-ExchangeOnline
