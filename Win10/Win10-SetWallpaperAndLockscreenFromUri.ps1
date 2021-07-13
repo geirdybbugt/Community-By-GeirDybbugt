@@ -62,5 +62,9 @@ New-ItemProperty -Path $RegKeyPath -Name $LockScreenPath -Value $LockScreenImage
 New-ItemProperty -Path $RegKeyPath -Name $LockScreenUrl -Value $LockScreenImageValue -PropertyType STRING -Force | Out-Null
 }
 
+
+# Restart explorer.exe
+    stop-process -name explorer –force
+
 # Clears the error log from powershell before exiting
     $error.clear()
