@@ -69,7 +69,7 @@
         }
 
         # Delete Microsoft Edge scheduled tasks
-        $EdgeScheduledTasks = "MicrosoftEdgeUpdateTaskMachineCore","MicrosoftEdgeUpdateTaskMachineUA"
+        $EdgeScheduledTasks = "MicrosoftEdgeUpdateTaskMachineCore","MicrosoftEdgeUpdateTaskMachineUA","MicrosoftEdgeUpdateBrowserReplacementTask"
         ForEach ($Task in $EdgeScheduledTasks)
         {
         Unregister-ScheduledTask -TaskName $Task -Confirm:$false
