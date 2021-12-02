@@ -1,7 +1,7 @@
 ﻿####------------------------------------------------------------------------####
 #### Editor info: Geir Dybbugt - https://dybbugt.no
-#### Removes windows store receiver before installing native receiver
-#### modified:: 5/5/2021
+#### Removes windows store receiver before installing latest native receiver
+#### modified:: 11/11/2021
 ####------------------------------------------------------------------------####
 <#
 .SYNOPSIS
@@ -33,7 +33,7 @@
         else
         {
             echo "Running"
-            Stop-Process -processname "$process" -Verbose
+            Stop-Process -processname "$process" -Force
         }
     }
 
@@ -45,25 +45,12 @@
       Write-host "Uninstalling:" $app
       Get-AppxPackage -allusers $app | Remove-AppxPackage
       Get-AppxPackage $app | Remove-AppxPackage
+
     }
-
-# adds registry configuration for Citrix Store
-    $RegKeyPath = 'HKLM:\SOFTWARE\Policies\Citrix\Receiver\Sites'
-    $Store1 = "STORE1"
-    $Store1Value = "Storename;https://login.something.com/Citrix/StoreName/discovery;On;Citrix" #<<<------ Change to your url and names
-    IF(!(Test-Path $RegKeyPath))
-    {
-    New-Item -Path $RegKeyPath -Force | Out-Null
-    }
-
-    New-ItemProperty -Path $RegKeyPath -Name $Store1 -Value $Store1Value -PropertyType STRING -Force | Out-Null
-
-# If Native Receiver is already installed, skip download and install
-    If (!(Get-WmiObject -Class Win32_Product | Where-Object Name -Like "Citrix Workspace*")) {
 
         # Cirix Receiver download source
         $Url = "https://downloadplugins.citrix.com/Windows/CitrixWorkspaceApp.exe"
-        $Target = "$env:SystemRoot\Temp\CitrixWorkspaceApp.exe"
+        $Target = "$env:SystemRoot\Temp\CitrixWorkspaceAppWeb.exe"
 
         # Delete the target if it exists, so that we don't have issues
         If (Test-Path $Target) { Remove-Item -Path $Target -Force -ErrorAction SilentlyContinue }
@@ -72,8 +59,7 @@
         Start-BitsTransfer -Source $Url -Destination $Target
 
         # Install Citrix Receiver
-        If (Test-Path $Target) { Start-Process -FilePath $Target -ArgumentList "/AutoUpdateCheck=auto /Allowaaddstore=A /AutoUpdateStream=Current /DeferUpdateCount=5 /AURolloutPriority=Medium /NoReboot /Silent EnableCEIP=False" -Wait }
-    }
+        If (Test-Path $Target) { Start-Process -FilePath $Target -ArgumentList "/AutoUpdateCheck=auto /Allowaddstore=N /AutoUpdateStream=Current /DeferUpdateCount=5 /AURolloutPriority=Medium /NoReboot /Silent EnableCEIP=False"}
 
 # Clears the error log from powershell before exiting
     $error.clear()
