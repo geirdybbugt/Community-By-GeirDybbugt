@@ -38,15 +38,25 @@
         "Date" = ""
         "Group Name" = ""
         "Name" = ""
+        "First Name" = ""
+        "Last Name" = ""
+        "Display Name" = ""
+        "Email" = ""
+        "Department" = ""
     }
 
     # Get the member data
     ForEach($dynamiclist in $dynamiclists){
-    $members = Get-Recipient -RecipientPreviewFilter $dynamiclist.RecipientFilter -OrganizationalUnit $dynamiclist.RecipientContainer | Select name
+    $members = Get-Recipient -RecipientPreviewFilter $dynamiclist.RecipientFilter -OrganizationalUnit $dynamiclist.RecipientContainer | Select name,FirstName,LastName,DisplayName,PrimarySmtpAddress,Department
         foreach ($member in $members){
         $record."Date" = $date
         $record."Group Name" = $dynamiclist
-        $record."Name" = $member.name        
+        $record."Name" = $member.name
+        $record."First Name" = $member.FirstName
+        $record."Last Name" = $member.LastName
+        $record."Display Name" = $member.Displayname
+        $record."Email" = $member.PrimarySmtpAddress 
+        $record."Department" = $member.Department
         $objRecord = New-Object PSObject -property $Record
         $Table += $objrecord
         }
