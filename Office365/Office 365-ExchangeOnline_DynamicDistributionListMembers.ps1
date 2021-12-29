@@ -28,13 +28,13 @@
 # Get running date
     $date = Get-Date -Format "dd.MM.yyyy"
 
-# To get the dynamic lists in the tenant
-    $dynamiclists = Get-DynamicDistributionGroup "*" 
+# To get the dynamic lists containing "DDL" in the name
+    $dynamiclists = Get-DynamicDistributionGroup "*DDL*" 
 
 # For table later
     $Table = @()
 
-    $Record = @{
+    $Record = [ordered] @{
         "Date" = ""
         "Group Name" = ""
         "Name" = ""
@@ -63,12 +63,12 @@
     }
 
 # Show result in console
-    $Table | Out-Host
+    $Table | ft | Out-Host
     Write-host "Press any key to complete export to file and exit" -ForegroundColor Cyan
-    pause
+	pause
 
 # Export to CSV file
-    $Table | Export-Csv -NoTypeInformation $DesktopPath\DDL-Members-$date.csv
+    $Table | Export-Csv -NoTypeInformation $DesktopPath\DDL-Members-$date.csv -Encoding UTF8    
 
 # Disconnect from Exchange Online
     Disconnect-ExchangeOnline

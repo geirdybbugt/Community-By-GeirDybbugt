@@ -7,6 +7,8 @@
     $Masterdestination = "$env:APPDATA\DybbugtNO-Files"
     $OneDriveDestination = "$Masterdestination\OneDrive"
     $OneDriveRegistry = "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"
+    $OneDriveRegistry64 = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe"
+
 
 
 #Folder Structure
@@ -31,7 +33,7 @@
 	cd \
     
     #Waiting for installation to complete
-    while (-not (Test-Path -Path $OneDriveRegistry)) {
+    while (-not (Test-Path -Path $OneDriveRegistry64)) {
     Start-Sleep -Seconds 5
     }
     
