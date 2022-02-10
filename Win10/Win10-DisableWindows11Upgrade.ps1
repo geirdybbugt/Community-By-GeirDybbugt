@@ -27,11 +27,13 @@ If ($ENV:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
             New-ItemProperty -LiteralPath "$RegPath" -Name 'ProductVersion' -Value $ProductVersion -PropertyType String -Force -ea SilentlyContinue;
             New-ItemProperty -LiteralPath "$RegPath" -Name 'TargetReleaseVersionInfo' -Value $TargetReleaseVersionInfo -PropertyType String -Force -ea SilentlyContinue; 
         } else {
-            write-host "failed" -ForegroundColor Red
-            exit
+            write-host "failed" -ForegroundColor Red            
             }
     } else { 
         New-ItemProperty -LiteralPath "$RegPath" -Name 'TargetReleaseVersion' -Value $TargetReleaseVersion -PropertyType DWORD -Force -ea SilentlyContinue;
         New-ItemProperty -LiteralPath "$RegPath" -Name 'ProductVersion' -Value $ProductVersion -PropertyType String -Force -ea SilentlyContinue;
         New-ItemProperty -LiteralPath "$RegPath" -Name 'TargetReleaseVersionInfo' -Value $TargetReleaseVersionInfo -PropertyType String -Force -ea SilentlyContinue; 
     }
+
+# Clears the error log from powershell before exiting
+    $error.clear()

@@ -31,7 +31,6 @@ if((Test-Path -LiteralPath $RegPath) -ne $true) {
             New-ItemProperty -LiteralPath "$RegPath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
         } else {
             write-host "failed" -ForegroundColor Red
-            exit
             }
     } else { 
             New-ItemProperty -LiteralPath "$RegPath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;

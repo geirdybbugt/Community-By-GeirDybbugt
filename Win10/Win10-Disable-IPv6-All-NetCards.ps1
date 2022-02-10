@@ -12,3 +12,6 @@
     {
      Disable-NetAdapterBinding -Name "$netcard" -ComponentID ms_tcpip6
     }
+
+# Clears the error log from powershell before exiting
+    $error.clear()
