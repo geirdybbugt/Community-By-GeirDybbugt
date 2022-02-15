@@ -17,11 +17,31 @@ If ($ENV:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
 }
 
 # Variables
-    $RegPath = "HKCU:\Software\Policies\Microsoft\Windows\control panel\desktop"
+    $RegPath = "HKCU:\Software\Policies\Microsoft\Windows\control panel\desktop" # Change to HKCU to set for current user only
+    $RegPath2 = "HKCU:\Control Panel\Desktop" 
     $ScreenSaverName = "scrnsave.scr"
     $ScreenSaverTimeout = "900"
 
-# Set values
+# Set values current user admin rights
+if((Test-Path -LiteralPath $RegPath) -ne $true) {
+    New-Item $RegPath -force
+        if ($?) {
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+        } else {
+            write-host "failed" -ForegroundColor Red
+            exit
+            }
+    } else { 
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+            New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+    }
+
+# Set values current user standard rights
 if((Test-Path -LiteralPath $RegPath) -ne $true) {
     New-Item $RegPath -force
         if ($?) {
@@ -31,6 +51,7 @@ if((Test-Path -LiteralPath $RegPath) -ne $true) {
             New-ItemProperty -LiteralPath "$RegPath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
         } else {
             write-host "failed" -ForegroundColor Red
+            exit
             }
     } else { 
             New-ItemProperty -LiteralPath "$RegPath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
