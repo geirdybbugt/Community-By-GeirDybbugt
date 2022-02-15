@@ -69,6 +69,7 @@ if((Test-Path -LiteralPath $RegPat2h) -ne $true) {
     # Variables
         $HKUpath = "HKU:\$LastLoggedOnUserSID\$Regpath3"
         $HKUpath
+        $HKUpath2 = "HKU:\.DEFAULT\$Regpath3"
 
     # Map HKU in registry as available drive in OS
         New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
@@ -76,22 +77,40 @@ if((Test-Path -LiteralPath $RegPat2h) -ne $true) {
         # Liste available PS drives
             #Get-PSDrive
 
-if((Test-Path -LiteralPath $HKUpath) -ne $true) {
-    New-Item $HKUpath -force
-        if ($?) {
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
-        } else {
-            write-host "failed" -ForegroundColor Red
-            }
-    } else { 
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
-            New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
-    }
+# Values for Last logged on user
+    if((Test-Path -LiteralPath $HKUpath) -ne $true) {
+        New-Item $HKUpath -force
+            if ($?) {
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+            } else {
+                write-host "failed" -ForegroundColor Red
+                }
+        } else { 
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+        }
+# Values for the  .Default profile
+    if((Test-Path -LiteralPath $HKUpath2) -ne $true) {
+        New-Item $HKUpath2 -force
+            if ($?) {
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+            } else {
+                write-host "failed" -ForegroundColor Red
+                }
+        } else { 
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaverIsSecure' -Value '1' -PropertyType String -Force -ea SilentlyContinue; 
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'SCRNSAVE.EXE' -Value $ScreenSaverName -PropertyType String -Force -ea SilentlyContinue;
+                New-ItemProperty -LiteralPath "$HKUpath2" -Name 'ScreenSaveTimeOut' -Value $ScreenSaverTimeout -PropertyType String -Force -ea SilentlyContinue;
+        }
 
     # Unmap HKU from available PS drives before exiting
             Remove-PSDrive hku
