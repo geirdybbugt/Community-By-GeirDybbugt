@@ -52,7 +52,7 @@ If ($ENV:PROCESSOR_ARCHITEW6432 -eq "AMD64") {
         $RegPath2 = "HKCU:\Control Panel\Desktop" 
 
     # Set the config
-        if((Test-Path -LiteralPath $RegPat2h) -ne $true) {
+        if((Test-Path -LiteralPath $RegPath2) -ne $true) {
             New-Item $RegPath2 -force
                 if ($?) {
                     New-ItemProperty -LiteralPath "$RegPath2" -Name 'ScreenSaveActive' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
