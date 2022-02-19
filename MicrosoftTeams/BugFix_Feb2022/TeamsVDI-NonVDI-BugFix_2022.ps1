@@ -41,7 +41,17 @@
  https://www.theregister.com/2022/02/15/microsoft_teams_outage/
 ------------------------------------------------------------------------####>
 
+# Set console window title
+    $host.ui.RawUI.WindowTitle = "Dybbugt.no - Teams 1.4 For VDI on NonVDI - 2022 Bugfix - https://dybbugt.no/2022/2067/"
+
+# Info
+    Write-host ""
+    Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
+    Write-host ""
+    Write-host ""
+
 # Stop Teams if currently running
+    Write-host "Starting bugfix" -ForegroundColor Cyan
     Write-Host "Stopping Teams Process" -ForegroundColor Yellow
         try{
             Get-Process -ProcessName Teams | Stop-Process -Force
@@ -52,9 +62,12 @@
         }
 
 # Look for and remove existing Teams installers
+# Machine Installer
     Write-Host "Removing Teams Machine-wide Installer" -ForegroundColor Yellow
     $MachineWide = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Teams Machine-Wide Installer"}
-    $MachineWide.Uninstall()
+    $MachineWide.Uninstall() | out-null
+
+# Function to uninstall Teams
     function unInstallTeams($path) {
     $clientInstaller = "$($path)\Update.exe"
   
@@ -70,7 +83,7 @@
     }
     }
 
-# Locate installation folder
+# Locate User installation folder
     $localAppData = "$($env:LOCALAPPDATA)\Microsoft\Teams"
     $programData = "$($env:ProgramData)\$($env:USERNAME)\Microsoft\Teams"
    
@@ -93,25 +106,25 @@
 
 # Folder Structure
     # Creating root folder
-        MD $Masterdestination -force
+        MD $Masterdestination -force | Out-Null
 
     # Creating Subfolders
-        MD $TeamsDestination -force
+        MD $TeamsDestination -force| Out-Null
 	
 # Add VDI isntall requirement if not there
     # Variables
         $RegPath = "HKLM:\Software\Citrix\PortICA"
         
         if((Test-Path -LiteralPath $RegPath) -ne $true) {
-            New-Item $RegPath -force
+            New-Item $RegPath -force | out-null
                 if ($?) {
-                    new-ItemProperty -LiteralPath "$RegPath" -Name 'ALLUSER' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
+                    new-ItemProperty -LiteralPath "$RegPath" -Name 'ALLUSER' -Value '1'-PropertyType String -Force -ea SilentlyContinue | out-null
                     } else {
                     write-host "failed" -ForegroundColor Red
                     }
             } else {
-                new-ItemProperty -LiteralPath "$RegPath" -Name 'ALLUSER' -Value '1'-PropertyType String -Force -ea SilentlyContinue;
-            }
+                new-ItemProperty -LiteralPath "$RegPath" -Name 'ALLUSER' -Value '1'-PropertyType String -Force -ea SilentlyContinue | out-null
+            } 
 
     # Remove remaining old Teams Cache folders from previous install - before installing the VDI based installer. 
 
@@ -143,7 +156,7 @@
     cd \
 
 # Remove registry keys to stop Teams from autostarting
-	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"
+	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"| Out-Null
 
 # Remove shortcut public desktop
     $ShortcutPath = "C:\Users\Public\Desktop\Microsoft Teams.lnk"
