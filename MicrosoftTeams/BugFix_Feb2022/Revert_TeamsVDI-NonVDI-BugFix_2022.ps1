@@ -2,54 +2,33 @@
 NOTE: 
             This package reverts the bugfix from 2022 issues back to normal per machine installer with updates enabled and cleans away the non vdi requirements.
             This makes is easy for the users to jump back to a normal installation of Teams after the issue has been resolved. 
+
+
+            The 2022 Bug is descriped here - https://dybbugt.no/2022/2067/
 NOTE End
 ------------------------------------
- This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft. 
- Users are experiencing issues with calling, conferencing etc after update to 1.5.2164 version of Teams. 
- Issues revolve around the functionality is just not working, gives error etc. 
- Downgrading to 1.4 resolves the issue. But, Teams gets auto updated. 
-
- Users especcially affected are users with devices controlled via Endpoint Manager/intune Azure join etc. 
- Users then typically has a Display Name set on their users in Azure including "(Something)" i.e "John Smith (Sales)". 
- Azure uses this to generate the folder name for the local user profiles giving issues to some users with long names. 
- This results in the folder getting a name with a non enclosing parenthesis like so: "John Smith(" - this seems to break functionality with some apps, including Teams after 1.5.x release. 
-
- Note for Microsoft - if the somehow sees this - please use Alias/identity or anything other than Display Name  to generate this folder name - Display nNme is not suited for this.
- Display name can also include special characters or non english characthers that also can cause challanges down the road.  
-
- A workaround to this problem for now, is to use the VDI installer, this installer has auto updated disabled when installed correctly.
- But, to install the VDI installer onto Non-VDI machines some tweaks need to be made. 
-
+ 
  This script will: 
+
  - Stop running Teams
  - Uninstall existing versions (machin installer and user installer)
  - Clear the Teams Cache from user profiles
- - Set the needed registry key to be able to install the VDI installer to NON-VDI machines
- - Download the MSI based VDI installer from Microsoft version 1.4.00.2781 for x64. 
+ - Remove the needed registry key to be able to install the VDI installer to NON-VDI machines
+ - Download the latest MSI based  installer from Microsoft for x64. 
  - Install it onto the machine
- - Start Teams when installed
-
- Auto updates is then disabled until permanent fix from Microsoft is available in the normal installer.   
-
+ - Start Teams when installed to inject it into the users profile for user based installation as normal
 
  
  Creator info: Geir Dybbugt - https://dybbugt.no
- Modified - 18.02.2022
-
- Refrences talking about the issues: 
-
- https://techcommunity.microsoft.com/t5/microsoft-teams/teams-version-1-5-00-2164-bug/m-p/3150143
- https://docs.microsoft.com/en-us/answers/questions/730769/teams-version-15002164-bug.html
- https://www.theregister.com/2022/02/15/microsoft_teams_outage/
+ Modified - 21.02.2022
 ------------------------------------------------------------------------####>
 
 # Set console window title
-    $host.ui.RawUI.WindowTitle = "Dybbugt.no - Teams 1.4 For VDI on NonVDI - 2022 Bugfix - https://dybbugt.no/2022/2067/"
+    $host.ui.RawUI.WindowTitle = "Dybbugt.no - Revert - Teams 1.4 For VDI on NonVDI - 2022 Bugfix - https://dybbugt.no/2022/2067/"
 
 # Info
     Write-host ""
-    Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
-    Write-host ""
+    Write-host "Reverting back to the normal Microsoft Teams installation - cleaning up temporary Bugfix installation" -ForegroundColor Green
     Write-host ""
 
 # Stop Teams if currently running
@@ -70,7 +49,7 @@ NOTE End
     $MachineWide.Uninstall() | out-null
 
 # Function to uninstall Teams
-    function unInstallTeams($path) {
+    function uninstallTeams($path) {
     $clientInstaller = "$($path)\Update.exe"
   
    try {
@@ -123,7 +102,7 @@ NOTE End
             write-host "VDI install requirement does not exist, continuing" -ForegroundColor Green
             }
 
-    # Remove remaining old Teams Cache folders from previous install - before installing the VDI based installer. 
+    # Remove remaining old Teams Cache folders from previous install - before installing. 
 
         # Remove the all users' cache. This reads all user subdirectories in each user folder matching
         # all folder names in the cache and removes them all
@@ -136,11 +115,81 @@ NOTE End
             Get-ChildItem -Path "$env:APPDATA\Microsoft\Teams\*" -Directory | `
 	            Where-Object Name -in ('application cache','blob storage','cache','databases','GPUcache','IndexedDB','Local Storage','tmp') | `
 	            ForEach {Remove-Item $_.FullName -Recurse -Force}
+
+    # Cleaning Web browser caches
+
+        # Google Chrome
+            Write-Host ""
+            Write-Host "Cleaning Google Chrome Cache" -ForegroundColor Cyan
+            Write-Host "Stopping Chrome Process" -ForegroundColor Yellow
+                try{
+                    Get-Process -ProcessName Chrome| Stop-Process -Force
+                    Start-Sleep -Seconds 3
+                    Write-Host "Chrome Process Sucessfully Stopped" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+                Write-Host "Clearing Google Chrome Cache" -ForegroundColor Yellow
+    
+                try{
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Cache" | Remove-Item -force -Recurse
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Cookies" -File | Remove-Item -force
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Web Data" -File | Remove-Item -force
+                    Write-Host "Google Chrome Cache Cleared!" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+
+        # Edge Chromium
+            Write-Host ""
+            Write-Host "Cleaning Edge Chromium Cache" -ForegroundColor Cyan
+            Write-Host "Stopping Edge Chromium Process" -ForegroundColor Yellow
+                try{
+                    Get-Process -ProcessName msedge| Stop-Process -Force
+                    Start-Sleep -Seconds 3
+                    Write-Host "Edge Chromium Process Sucessfully Stopped" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+                Write-Host "Clearing Edge Chromium Cache" -ForegroundColor Yellow
+  
+                try{
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Cache" | Remove-Item -Force -Recurse
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Cookies" -File | Remove-Item -force
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Web Data" -File | Remove-Item -force
+                    Write-Host "Edge Chromium Cache Cleared!" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+
+        # IE and Edge
+            Write-Host ""
+            Write-Host "Cleaning Edge and Internet Explorer Cache" -ForegroundColor Cyan
+            Write-Host "Stopping IE Process" -ForegroundColor Yellow
+    
+            try{
+                Get-Process -ProcessName MicrosoftEdge | Stop-Process -Force
+                Get-Process -ProcessName IExplore | Stop-Process -Force
+                Write-Host "Internet Explorer and Edge Processes Sucessfully Stopped" -ForegroundColor Green
+            }catch{
+                echo $_
+            }
+            Write-Host "Clearing IE Cache" -ForegroundColor Yellow
+    
+            try{
+                RunDll32.exe InetCpl.cpl, ClearMyTracksByProcess 8
+                RunDll32.exe InetCpl.cpl, ClearMyTracksByProcess 2
+                Write-Host "IE and Edge Cache Cleared!" -ForegroundColor Green
+                Write-Host ""
+            }catch{
+                echo $_
+            }
  
 # Set TLS protocol type
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
 # Downloading source file
+    Write-Host "Downloading Teams installation" -ForegroundColor Cyan
     $TeamsDownload = "https://teams.microsoft.com/downloads/desktopurl?env=production&plat=windows&arch=x64&managedInstaller=true&download=true"
         if((Test-Path "$TeamsDestination\teams.msi") -eq $true) {
         remove-item -path "$TeamsDestination\teams.msi" -force
@@ -148,9 +197,11 @@ NOTE End
         Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
   # start installation
+    Write-Host "Installing Microsoft Teams" -ForegroundColor Yellow
     cd $TeamsDestination
     start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams.msi`" ALLUSERS=1" -wait
     cd \
+    Write-Host "Microsoft Teams installed!" -ForegroundColor Green
 
 # Remove registry keys to stop Teams from autostarting
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"| Out-Null
@@ -167,10 +218,11 @@ NOTE End
     remove-item $Masterdestination -recurse -Force
 
 # Start teams installer first time to load into profile for the user
-    start-process -FilePath "C:\Program Files (x86)\Teams Installer\teams.exe"
+    $teamspath = "${env:ProgramFiles(x86)}\Teams Installer"
+    $teamsexe = "Teams.exe"
+
+    Write-Host "Starting Microsoft Teams" -ForegroundColor Green
+    Start-process -FilePath "$teamspath\$teamsexe"
 
 # Clears the error log from powershell before exiting
     $error.clear()
-
-# exit
-    exit

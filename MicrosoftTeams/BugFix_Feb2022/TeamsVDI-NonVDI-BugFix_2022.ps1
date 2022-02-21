@@ -48,7 +48,6 @@
     Write-host ""
     Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
     Write-host ""
-    Write-host ""
 
 # Stop Teams if currently running
     Write-host "Starting bugfix" -ForegroundColor Cyan
@@ -139,11 +138,82 @@
             Get-ChildItem -Path "$env:APPDATA\Microsoft\Teams\*" -Directory | `
 	            Where-Object Name -in ('application cache','blob storage','cache','databases','GPUcache','IndexedDB','Local Storage','tmp') | `
 	            ForEach {Remove-Item $_.FullName -Recurse -Force}
+
+    # Cleaning Web browser caches
+
+        # Google Chrome
+            Write-Host ""
+            Write-Host "Cleaning Google Chrome Cache" -ForegroundColor Cyan
+            Write-Host "Stopping Chrome Process" -ForegroundColor Yellow
+                try{
+                    Get-Process -ProcessName Chrome| Stop-Process -Force
+                    Start-Sleep -Seconds 3
+                    Write-Host "Chrome Process Sucessfully Stopped" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+                Write-Host "Clearing Google Chrome Cache" -ForegroundColor Yellow
+    
+                try{
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Cache" | Remove-Item -force -Recurse
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Cookies" -File | Remove-Item -force
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Google\Chrome\User Data\Default\Web Data" -File | Remove-Item -force
+                    Write-Host "Google Chrome Cache Cleared!" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+
+        # Edge Chromium
+            Write-Host ""
+            Write-Host "Cleaning Edge Chromium Cache" -ForegroundColor Cyan
+            Write-Host "Stopping Edge Chromium Process" -ForegroundColor Yellow
+                try{
+                    Get-Process -ProcessName msedge| Stop-Process -Force
+                    Start-Sleep -Seconds 3
+                    Write-Host "Edge Chromium Process Sucessfully Stopped" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+                Write-Host "Clearing Edge Chromium Cache" -ForegroundColor Yellow
+  
+                try{
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Cache" | Remove-Item -Force -Recurse
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Cookies" -File | Remove-Item -force
+                    Get-ChildItem -Path $env:LOCALAPPDATA"\Microsoft\Edge\User Data\Default\Web Data" -File | Remove-Item -force
+                    Write-Host "Edge Chromium Cache Cleared!" -ForegroundColor Green
+                }catch{
+                    echo $_
+                }
+
+        # IE and Edge
+            Write-Host ""
+            Write-Host "Cleaning Edge and Internet Explorer Cache" -ForegroundColor Cyan
+            Write-Host "Stopping IE Process" -ForegroundColor Yellow
+    
+            try{
+                Get-Process -ProcessName MicrosoftEdge | Stop-Process -Force
+                Get-Process -ProcessName IExplore | Stop-Process -Force
+                Write-Host "Internet Explorer and Edge Processes Sucessfully Stopped" -ForegroundColor Green
+            }catch{
+                echo $_
+            }
+            Write-Host "Clearing IE Cache" -ForegroundColor Yellow
+    
+            try{
+                RunDll32.exe InetCpl.cpl, ClearMyTracksByProcess 8
+                RunDll32.exe InetCpl.cpl, ClearMyTracksByProcess 2
+                Write-Host "IE and Edge Cache Cleared!" -ForegroundColor Green
+                Write-Host ""
+            }catch{
+                echo $_
+            }
+
  
 # Set TLS protocol type
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Downloading source file
+    Write-Host "Downloading Teams installation" -ForegroundColor Cyan
     $TeamsDownload = "https://statics.teams.cdn.office.net/production-windows-x64/1.4.00.2781/Teams_windows_x64.msi"
         if((Test-Path "$TeamsDestination\teams.msi") -eq $true) {
         remove-item -path "$TeamsDestination\teams.msi" -force
@@ -151,9 +221,11 @@
         Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
   # start installation
+    Write-Host "Installing Microsoft Teams" -ForegroundColor Yellow
     cd $TeamsDestination
     start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams.msi`"  ALLUSER=1 ALLUSERS=1" -wait
     cd \
+    Write-Host "Microsoft Teams installed!" -ForegroundColor Green
 
 # Remove registry keys to stop Teams from autostarting
 	Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"| Out-Null
@@ -170,10 +242,12 @@
     remove-item $Masterdestination -recurse -Force
 
 # Start Teams
-    Start-process -FilePath "C:\Program Files (x86)\Microsoft\Teams\current\Teams.exe"
+    $teamspath = "${env:ProgramFiles(x86)}\Microsoft\Teams\current"
+    $teamsexe = "Teams.exe"
+
+    Write-Host "Starting Microsoft Teams" -ForegroundColor Green
+    Start-process -FilePath "$teamspath\$teamsexe" 
+  
 
 # Clears the error log from powershell before exiting
     $error.clear()
-
-# exit
-    exit
