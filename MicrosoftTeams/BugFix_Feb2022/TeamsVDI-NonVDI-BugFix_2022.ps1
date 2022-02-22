@@ -22,6 +22,7 @@
  - Stop running Teams
  - Uninstall existing versions (machin installer and user installer)
  - Clear the Teams Cache from user profiles
+ - Clear web browser caches - Teams caches stuff there as well... You will be warned before this step with a confirmation
  - Set the needed registry key to be able to install the VDI installer to NON-VDI machines
  - Download the MSI based VDI installer from Microsoft version 1.4.00.2781 for x64. 
  - Install it onto the machine
@@ -48,6 +49,8 @@
     Write-host ""
     Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
     Write-host ""
+    Write-host "NOTE: As part of the install process, web browsers will be terminated, you will be informed before this step" -ForegroundColor Yellow
+
 
 # Stop Teams if currently running
     Write-host "Starting bugfix" -ForegroundColor Cyan
@@ -140,6 +143,12 @@
 	            ForEach {Remove-Item $_.FullName -Recurse -Force}
 
     # Cleaning Web browser caches
+        write-host ""
+        write-host "NOTICE: Web browsers are now about to be closed before clearing the web cache, save unsaved work if any in open web browser sessions before continuing the process!" -ForegroundColor Red
+        Write-Host ""
+        $clearCache = Read-Host "Do you want to stop running web browser instances and clear the cache (Y/N)?"
+        $clearCache = $clearCache.ToUpper()
+        if ($clearCache -eq "Y"){
 
         # Google Chrome
             Write-Host ""
@@ -207,9 +216,9 @@
             }catch{
                 echo $_
             }
+        }        
 
- 
-# Set TLS protocol type
+ # Set TLS protocol type
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Downloading source file
