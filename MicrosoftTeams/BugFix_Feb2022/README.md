@@ -1,15 +1,6 @@
-# Collection of Powershell scripts
-also available via https://dybbugt.no/fieldnotes/powershell/
- 
-Here you will find various powershell scripts/commands that can be useful in various circumstances.
-The content list below show the current available scripts for you to find.
-
-I will add more as I make them, and if they are suited to be generalized and made available to others.
-If I find some useful scripts elsewhere, I will add those aswell – with notes on who is the creator.
-
-Hope you find the content useful.
-
-Content available:
+# Bugfix for Teams due to issues with Audio/Video introduced in certain environments after 1.5.x update
+<br>
+Details about bug can be founde here: https://dybbugt.no/2022/2067/
 
 # TeamsVDI-NonVDI-BugFix_2022.ps1
 **|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft.**
