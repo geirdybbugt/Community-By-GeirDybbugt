@@ -1,6 +1,6 @@
 # Bugfix for Teams due to issues with Audio/Video introduced in certain environments after 1.5.x update
 <br>
-Details about bug can be founde here: https://dybbugt.no/2022/2067/
+Details about bug can be found here: https://dybbugt.no/2022/2067/
 
 # TeamsVDI-NonVDI-BugFix_2022.ps1
 **|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
@@ -14,7 +14,9 @@ This results in the folder getting a name with a non enclosing parenthesis like 
  
 **Note for Microsoft** - if they somehow sees this - please use Alias/identity,mailnickname or anything other than Display Name  to generate this folder name - Display Name is not suited for this.
 <br>
-Display name can also include special characters or non english characthers that also can cause challanges down the road.  
+Display name can also include special characters or non english characthers that also can cause challanges down the road. 
+<br>
+<br>
 A workaround to this problem for now, is to use the VDI installer, this installer has auto updated disabled when installed correctly.
 But, to install the VDI installer onto Non-VDI machines some tweaks need to be made.
 <br>
@@ -38,15 +40,16 @@ https://docs.microsoft.com/en-us/answers/questions/730769/teams-version-15002164
 <br>
 https://www.theregister.com/2022/02/15/microsoft_teams_outage/
 <br>
-#TeamsVDI-NonVDI-BugFix_2022.exe
 
+# TeamsVDI-NonVDI-BugFix_2022.exe
 **|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
+<br>
 This is an EXE installer of the PS1 script above, just to make it easy for the users to quickly run the installer.
 Not everyone os comfortable with running PowerShell scripts etc. 
 <br>
 *The EXE will ask for elevation. Conversion to EXE is done with ps2exe module*
  
-#Revert_TeamsVDI-NonVDI-BugFix_2022.ps1
+# Revert_TeamsVDI-NonVDI-BugFix_2022.ps1
 **|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
 <br>
 This package reverts the bugfix from 2022 issues back to normal per machine installer with updates enabled and cleans away the non vdi requirements.
@@ -62,10 +65,11 @@ This makes is easy for the users to jump back to a normal installation of Teams 
  - Install it onto the machine
  - Start Teams when installed to inject it into the users profile for user based installation as normal
  <br>
-*Microsoft Teams is then back to the normal machine installer with the latest version with updates enabeld*
+*Microsoft Teams is then back to the normal machine installer with the latest version with updates enabled*
 
-#Revert_TeamsVDI-NonVDI-BugFix_2022.exe
+# Revert_TeamsVDI-NonVDI-BugFix_2022.exe
 This is an EXE installer of the PS1 script above, just to make it easy for the users to quickly run the installer.
-Not everyone os comfortable with running PowerShell scripts etc. 
+<br>
+Not everyone is comfortable with running PowerShell scripts etc. 
 <br>
 *The EXE will ask for elevation. Conversion to EXE is done with ps2exe module* 
