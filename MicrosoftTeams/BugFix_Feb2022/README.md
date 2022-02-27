@@ -3,7 +3,7 @@
 Details about bug can be founde here: https://dybbugt.no/2022/2067/
 
 # TeamsVDI-NonVDI-BugFix_2022.ps1
-**|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
+**|--This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
 Users are experiencing issues with calling, conferencing etc after update to 1.5.2164 version of Teams.
 Issues revolve around the functionality is just not working, gives error etc. 
 Downgrading to 1.4 resolves the issue. But, Teams gets auto updated. 
@@ -26,6 +26,7 @@ This script will:
  - Set the needed registry key to be able to install the VDI installer to NON-VDI machines
  - Download the MSI based VDI installer from Microsoft version 1.4.00.2781 for x64. 
  - Install it onto the machine
+ - Close Outlook and register the Teams addi for Outlook 
  - Start Teams when installed
 <br>
 Auto updates is then disabled until permanent fix from Microsoft is available in the normal installer.
@@ -40,14 +41,14 @@ https://www.theregister.com/2022/02/15/microsoft_teams_outage/
 <br>
 #TeamsVDI-NonVDI-BugFix_2022.exe
 
-**|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
+**|--This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
 This is an EXE installer of the PS1 script above, just to make it easy for the users to quickly run the installer.
 Not everyone os comfortable with running PowerShell scripts etc. 
 <br>
 *The EXE will ask for elevation. Conversion to EXE is done with ps2exe module*
  
 #Revert_TeamsVDI-NonVDI-BugFix_2022.ps1
-**|—-This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
+**|--This package was created due to an apparent bug on Microsoft Teams introduced in the 1.5 release from Microsoft**
 <br>
 This package reverts the bugfix from 2022 issues back to normal per machine installer with updates enabled and cleans away the non vdi requirements.
 This makes is easy for the users to jump back to a normal installation of Teams after the issue has been resolved.

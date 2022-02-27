@@ -26,6 +26,7 @@
  - Set the needed registry key to be able to install the VDI installer to NON-VDI machines
  - Download the MSI based VDI installer from Microsoft version 1.4.00.2781 for x64. 
  - Install it onto the machine
+ - Close Outlook and register the Teams addi for Outlook 
  - Start Teams when installed
 
  Auto updates is then disabled until permanent fix from Microsoft is available in the normal installer.   
@@ -33,7 +34,7 @@
 
  
  Creator info: Geir Dybbugt - https://dybbugt.no
- Modified - 18.02.2022
+ Modified - 27.02.2022
 
  Refrences talking about the issues: 
 
@@ -50,7 +51,7 @@
     Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
     Write-host ""
     Write-host "NOTE: As part of the install process, web browsers will be terminated, you will be informed before this step" -ForegroundColor Yellow
-
+    Write-host ""
 
 # Stop Teams if currently running
     Write-host "Starting bugfix" -ForegroundColor Cyan
@@ -250,13 +251,31 @@
     remove-item $TeamsDestination -recurse -Force
     remove-item $Masterdestination -recurse -Force
 
+# Stopping Outlook to register the Teams Addin modules
+    Write-Host ""
+    Write-host "Need to close Outlook to register the Teams Adding for Outlook - press a key to close Outlook" -ForegroundColor Cyan
+    Write-host ""
+    Pause
+    Write-Host "Stopping Outlook Process" -ForegroundColor Yellow
+        try{
+            Get-Process -ProcessName Outlook | Stop-Process -Force
+            Start-Sleep -Outlook 3
+            Write-Host "Teams Process Sucessfully Stopped" -ForegroundColor Green
+        }catch{
+            echo $_
+        }
+
+    Write-host "Registering Teams Addin for Outlook" -ForegroundColor Yellow
+        $TeamsAddinFolderName = Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft\TeamsMeetingAddin"  | Select-Object -ExpandProperty Fullname  
+        regsvr32.exe /n /i /s "$TeamsAddinFolderName\x64\Microsoft.Teams.AddinLoader.dll" 
+        regsvr32.exe /n /i /s "$TeamsAddinFolderName\x86\Microsoft.Teams.AddinLoader.dll" 
+
 # Start Teams
     $teamspath = "${env:ProgramFiles(x86)}\Microsoft\Teams\current"
     $teamsexe = "Teams.exe"
 
     Write-Host "Starting Microsoft Teams" -ForegroundColor Green
-    Start-process -FilePath "$teamspath\$teamsexe" 
-  
+    Start-process -FilePath "$teamspath\$teamsexe"   
 
 # Clears the error log from powershell before exiting
     $error.clear()

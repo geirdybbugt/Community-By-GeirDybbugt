@@ -32,6 +32,7 @@ NOTE End
     Write-host "Problem as described in details on the post found here 'https://dybbugt.no/2022/2067/'" -ForegroundColor Green
     Write-host ""
     Write-host "NOTE: As part of the install process, web browsers will be terminated, you will be informed before this step" -ForegroundColor Yellow
+    Write-host ""
 
 # Stop Teams if currently running
     Write-host "Starting bugfix" -ForegroundColor Cyan
