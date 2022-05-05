@@ -3,7 +3,7 @@ Downloads and install Microsoft Teams x64 for VDI
 Can be run later to update packages
  
 Creator info: Geir Dybbugt - https://dybbugt.no
-Modified - 28.02.2022
+Modified - 28.03.2022
 ---------------------------------------------------------------------------#>
 
 # Variables
@@ -26,13 +26,23 @@ Modified - 28.02.2022
     $TeamsDownload = $TeamsDownload -replace "&amp;","&"
     Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
-  #start installation
+  # start installation
     cd $TeamsDestination
     start-process msiexec.exe -argumentlist "/i `"$TeamsDestination\teams.msi`"  ALLUSER=1 ALLUSERS=1" -wait
     cd \
 
- # Remove registry keys to stop Teams from autostarting
-    Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"
+# Prevent Teams from autostarting 	 
+
+	# Change the JSON config files for autostart 
+		$JSON = "${env:ProgramFiles(x86)}\Microsoft\Teams\setup.json"
+		$JSON2 = "${env:ProgramFiles(x86)}\Teams Installer\setup.json"
+	 
+	 # Change Teams noAutoStart from false to true
+		(Get-Content $JSON).replace('"noAutoStart":false', '"noAutoStart":true') | Set-Content $JSON
+		(Get-Content $JSON2).replace('"noAutoStart":false', '"noAutoStart":true') | Set-Content $JSON2
+		
+	 # Remove registry keys to stop Teams from autostarting
+		Remove-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run" -Name "Teams"	
 
  # Remove shortcut public desktop
     $ShortcutPath = "C:\Users\Public\Desktop\Microsoft Teams.lnk"
@@ -59,10 +69,10 @@ Modified - 28.02.2022
         regsvr32.exe /n /i /s "$TeamsAddinFolderName\x64\Microsoft.Teams.AddinLoader.dll" 
         regsvr32.exe /n /i /s "$TeamsAddinFolderName\x86\Microsoft.Teams.AddinLoader.dll" 
  
-  # Cleaning up downloaded files
-    start-sleep -Seconds 10
-    remove-item $TeamsDestination -recurse -Force
-    remove-item $Masterdestination -recurse -Force
+# Cleaning up downloaded files
+	start-sleep -Seconds 10
+	remove-item $TeamsDestination -recurse -Force
+	remove-item $Masterdestination -recurse -Force
 
 # Clears the error log from powershell before exiting
     $error.clear()
