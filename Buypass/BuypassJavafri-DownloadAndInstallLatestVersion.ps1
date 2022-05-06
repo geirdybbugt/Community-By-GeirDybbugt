@@ -1,10 +1,11 @@
-﻿<#------------------------------------------------------------------------
+<#﻿####
  Downloads and install Buypass Javafree
  Can be run later to update packages
 
  Creator info: Geir Dybbugt - https://dybbugt.no
- Modified - 27.02.2022
- ------------------------------------------------------------------------####>
+ Modified - 06.05.2022
+ ####>
+
  
 # Variables
     $Masterdestination = "$env:APPDATA\DybbugtNO-Files"
