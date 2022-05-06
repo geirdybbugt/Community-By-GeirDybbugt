@@ -16,4 +16,4 @@ Modified: 06.05.2022 - Geir Dybbugt
     set-mailbox email@domain.com -MessageCopyForSendOnBehalfEnabled $True
 
 # Check status
-    get-mailbox -Identity email@domain.com | Select-Object DisplayName,MessageCopyForSendOnBehalfEnabled, MessageCopyForSentAsEnabled | fl
+    get-mailbox -Identity email@domain.com | Select-Object DisplayName,MessageCopyForSendOnBehalfEnabled, MessageCopyForSentAsEnabled | ft -AutoSize
