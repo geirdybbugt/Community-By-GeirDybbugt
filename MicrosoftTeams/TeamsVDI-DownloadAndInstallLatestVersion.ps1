@@ -17,13 +17,48 @@ Modified - 28.03.2022
 
     # Creating Subfolders
     MD $TeamsDestination -force
+
+    # Temp path for FSLogix rules 
+    $temppath = "c:\fsltemp"
+
+# Move rules to temp before install/update    
+    if(!(test-path $temppath)){
+    write-host "not exist"
+    md $temppath
+    Move-Item "C:\Program Files\FSLogix\Apps\Rules\*.*" "C:\fsltemp"
+    } else {
+    write-host "exist"
+    Move-Item "C:\Program Files\FSLogix\Apps\Rules\*.*" "C:\fsltemp"
+    }
+
+# Look for and remove existing Teams installers
+# Machine Installer
+    Write-Host "Removing Teams Machine-wide Installer" -ForegroundColor Yellow
+    $MachineWide = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Teams Machine-Wide Installer"}
+    $MachineWide.Uninstall() | out-null
+
+# Function to uninstall Teams
+    function unInstallTeams($path) {
+    $clientInstaller = "$($path)\Update.exe"
+  
+   try {
+        $process = Start-Process -FilePath "$clientInstaller" -ArgumentList "--uninstall /s" -PassThru -Wait -ErrorAction STOP
+        if ($process.ExitCode -ne 0)
+    {
+      Write-Error "UnInstallation failed with exit code  $($process.ExitCode)."
+        }
+    }
+    catch {
+        Write-Error $_.Exception.Message
+    }
+    }
 	
  # Set TLS protocol type
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
  # Downloading source file
     $TeamsDownload = ((Invoke-WebRequest -Uri 'https://docs.microsoft.com/en-us/microsoftteams/teams-for-vdi' -UseBasicParsing ).Links | where outerHTML -Like "*64-bit version*").href
-    $TeamsDownload = $TeamsDownload -replace "&amp;","&"
+    $TeamsDownload = $TeamsDownload -replace "&","&"
     Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
   # start installation
@@ -68,6 +103,11 @@ Modified - 28.03.2022
         $TeamsAddinFolderName = Get-ChildItem "${env:ProgramFiles(x86)}\Microsoft\TeamsMeetingAddin"  | Select-Object -ExpandProperty Fullname  
         regsvr32.exe /n /i /s "$TeamsAddinFolderName\x64\Microsoft.Teams.AddinLoader.dll" 
         regsvr32.exe /n /i /s "$TeamsAddinFolderName\x86\Microsoft.Teams.AddinLoader.dll" 
+
+# Move FSLogix rules back to folder
+    Move-Item "C:\fsltemp\*.*" "C:\Program Files\FSLogix\Apps\Rules\"
+    Remove-Item C:\fsltemp -Force
+
  
 # Cleaning up downloaded files
 	start-sleep -Seconds 10
