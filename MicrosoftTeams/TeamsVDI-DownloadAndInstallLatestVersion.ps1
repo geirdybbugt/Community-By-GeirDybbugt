@@ -58,7 +58,7 @@ Modified - 28.03.2022
 
  # Downloading source file
     $TeamsDownload = ((Invoke-WebRequest -Uri 'https://docs.microsoft.com/en-us/microsoftteams/teams-for-vdi' -UseBasicParsing ).Links | where outerHTML -Like "*64-bit version*").href
-    $TeamsDownload = $TeamsDownload -replace "&","&"
+    $TeamsDownload = $TeamsDownload -replace "&amp;","&"
     Start-BitsTransfer -Source $TeamsDownload -Destination "$TeamsDestination\teams.msi"
 
   # start installation
