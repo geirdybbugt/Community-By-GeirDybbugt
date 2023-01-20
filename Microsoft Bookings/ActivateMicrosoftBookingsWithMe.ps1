@@ -12,7 +12,7 @@ Connect-ExchangeOnline
 $PolBookingsWithMe = "EnableBookWithMe"
 
 New-SharingPolicy -Name $PolBookingsWithMe -Domains Anonymous:CalendarSharingFreeBusySimple
-Set-SharingPolicy -Identity $PolBookingsWithMe -Domains @{Add="*:CalendarSharingFreeBusySimple"}
+Set-SharingPolicy -Identity $PolBookingsWithMe -Domains @{Add = "*:CalendarSharingFreeBusySimple" }
 
 # Add users to the policy
 $Users = @(
@@ -21,7 +21,7 @@ $Users = @(
 )
 
 foreach ($user in $Users) {
-    Set-Mailbox -identity @user -SharingPolicy $PolBookingsWithMe
+    Set-Mailbox -identity $user -SharingPolicy $PolBookingsWithMe
 }
 
 Remove-Variable PolBookingsWithMe
