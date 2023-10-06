@@ -59,8 +59,11 @@
     #Extracting package
     Expand-Archive "$FSLogixDestination\FSLogix.zip" -DestinationPath "$FSLogixDestination" -force
 
+    #Get Extraxted Foldername
+    $FolderName = Get-ChildItem $FSLogixDestination |where name -like "FSLogix_Ap*" |Select-Object -ExpandProperty name
+       
     #Installing//Updating FSLogix
-    start -wait "$FSLogixDestination\x64\Release\FSLogixAppsSetup" "/quiet /norestart"  # <----- Edit this if your want the 32-bit installer. 
+    start -wait "$FSLogixDestination\$FolderName\x64\Release\FSLogixAppsSetup.exe" "/quiet /norestart"  # <----- Edit this if your want the 32-bit installer.
 
 #Deleting default members of Profile Container and Office 365 container groups (Default everyone is allowed)
 #   NOTE: You can also insert the group you wish to grant access here with the net group /add command. 
