@@ -11,10 +11,53 @@ Hope you find the content useful.
 
 Content available:
 
+# 7zip
+**|—-Script to download and install latest version**
+<br>
 # Office 365
 **|—-Script to download and install latest version via the Office Deployment tool (Click to run)**
 <br>
 *Remember to input your XML file in the script*
+# Buypass Javafri
+**|—-Script to download and install latest version**
+<br>
+# Citrix
+**|—-Script to download and install latest version of Citrix Workspace/Receiver.**
+<br>
+*Intended to run via Intune*
+<br>
+**|—-Script to set Citrix Files desktop app config defaults**
+<br>
+*Useful to force require login for recipients // enable encrypted email as default etc, when sharing directly from windows explorer.*
+<br>
+**|—-Script to Remove windows store Workspace app and install native client**
+<br>
+# FSLogix
+**|—-Script to download and install latest version**
+ <br>
+*also removes the default everyone group from the include group for Profile containers and office 365 containers*
+# Intune
+**|—-Script to get device hash**
+ <br>
+**|—-Script collection used to create single app kosk deployment**
+<br>
+*This collection is made available in context of the following blog post.:
+https://hacking-windows-kiosk-mode-single-intune-config-for-multiple-devices-needing-unique-urls-with-self-provisioning-autopilot
+
+Read the post to see the full details of the deployment for this. 
+I am that there are duplicate script sections in the files located here, this was intended initially, cleanup should you need/want. 
+All scripts are provided as is for use at your own risk, always do proper testing. *
+# KeePass
+**|—-Script to download and install latest version**
+<br>
+# Microsoft Edge
+**|—-Script to download and install latest version**
+ <br>
+*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop*
+# Microsoft Office
+**|—-Script to download and install latest version (365 for VDI)**
+ <br>
+*Used to deploy office 365 installation on VDI/RDS*
 # OneDrive
 **|—-Scripts to deploy with intune to configure OneDrive for Business with Known Folder management silently**
 <br>
@@ -22,14 +65,10 @@ Content available:
 **|—-Script to download and install latest version**
 <br>
 *Downloads and install latest with Alluser switch, and unregister update tasks*
-# FSLogix
-**|—-Script to download and install latest version**
- <br>
-*also removes the default everyone group from the include group for Profile containers and office 365 containers*
-# Microsoft Edge
-**|—-Script to download and install latest version**
- <br>
-*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop*
+# TeamViewer
+**|—-Script to download and install latest version to desktop for user**
+<br>
+*Used with intune*
 # Microsoft Teams
 **|—-Script to download and install latest version**
  <br>
@@ -56,14 +95,6 @@ For simplicity, the below script is using the paths and variables from the scrip
 **|—- Creating DNS records with powershell**
 <br>
 *Just a simple commandlist for creating a-records and conditional forwarders with powershell, to be included in other scripts:)*
-# Citrix
-**|—-Script to download and install latest version of Citrix Workspace/Receiver.**
-<br>
-*Intended to run via Intune*
-<br>
-**|—-Script to set Citrix Files desktop app config defaults**
-<br>
-*Useful to force require login for recipients // enable encrypted email as default etc, when sharing directly from windows explorer.*
 # Windows 10
 **|—-Script to set wallpaper and lockscreen on Windows 10 clients**
 <br>
