@@ -111,6 +111,9 @@ Currently Intune requires you to have Windows 10 Educational or Enterprise to be
 **|—-Script to uninstall preinstalled APPX packages on Windows 10**
 <br>
 *This was made to be run via Intune, but that is not a requirement*
+<br>
 **|—-Script to Disable IPv6**
+<br>
 **|—-Script to disable upgrade from Win10 > Win11**
+<br>
 **|—-Script to set Screensaver on non-enterprise windows edition**
