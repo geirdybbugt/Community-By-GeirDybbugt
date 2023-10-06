@@ -50,14 +50,25 @@ All scripts are provided as is for use at your own risk, always do proper testin
 # KeePass
 **|—-Script to download and install latest version**
 <br>
-# Microsoft Edge
+# Microsoft Bookings
 **|—-Script to download and install latest version**
+<br>
+# Microsoft Edge
+**|—-Script to activate BookingsWithMe feature**
  <br>
-*Downloads and install the latest stable x64 release from MS API site for Edge, also removes scheduled tasks, disable update services, adds exclusion for Citrix API hooks and removes shortcut on desktop*
+**|—-Script used for demo deployment of Microsoft Bookings **
 # Microsoft Office
 **|—-Script to download and install latest version (365 for VDI)**
  <br>
 *Used to deploy office 365 installation on VDI/RDS*
+**|—-Script to set Outlook programatic security settings**
+# Microsoft Teams
+**|—-Script to download and install latest version**
+ <br>
+*Downloads and install Microsoft Teams x64 for VDI*
+# Office 365
+**|—-Various scripts used agains O365 services**
+ <br>
 # OneDrive
 **|—-Scripts to deploy with intune to configure OneDrive for Business with Known Folder management silently**
 <br>
@@ -69,10 +80,6 @@ All scripts are provided as is for use at your own risk, always do proper testin
 **|—-Script to download and install latest version to desktop for user**
 <br>
 *Used with intune*
-# Microsoft Teams
-**|—-Script to download and install latest version**
- <br>
-*Downloads and install Microsoft Teams x64 for VDI*
 # Windows Server
 **|—-Script to install a fresh NPS server used with the Azure MFA extension**
 *Will install NPS role, download and install Azure MFA extension, then give you promts underway for input.*
@@ -104,3 +111,6 @@ Currently Intune requires you to have Windows 10 Educational or Enterprise to be
 **|—-Script to uninstall preinstalled APPX packages on Windows 10**
 <br>
 *This was made to be run via Intune, but that is not a requirement*
+**|—-Script to Disable IPv6**
+**|—-Script to disable upgrade from Win10 > Win11**
+**|—-Script to set Screensaver on non-enterprise windows edition**
