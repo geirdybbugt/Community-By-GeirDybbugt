@@ -1,6 +1,5 @@
 # Collection of Powershell scripts
-also available via https://dybbugt.no/fieldnotes/powershell/
- 
+
 Here you will find various powershell scripts/commands that can be useful in various circumstances.
 The content list below show the current available scripts for you to find.
 
