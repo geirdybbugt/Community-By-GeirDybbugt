@@ -61,6 +61,7 @@ All scripts are provided as is for use at your own risk, always do proper testin
 **|—-Script to download and install latest version (365 for VDI)**
  <br>
 *Used to deploy office 365 installation on VDI/RDS*
+<br>
 **|—-Script to set Outlook programatic security settings**
 # Microsoft Teams
 **|—-Script to download and install latest version**
@@ -73,6 +74,7 @@ All scripts are provided as is for use at your own risk, always do proper testin
 **|—-Scripts to deploy with intune to configure OneDrive for Business with Known Folder management silently**
 <br>
 *View comments in the individual scripts for deployment instructions for Intune*
+<br>
 **|—-Script to download and install latest version**
 <br>
 *Downloads and install latest with Alluser switch, and unregister update tasks*
