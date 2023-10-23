@@ -59,7 +59,7 @@
     #Extracting package
     Expand-Archive "$FSLogixDestination\FSLogix.zip" -DestinationPath "$FSLogixDestination" -force
 
-    #Get Extraxted Foldername
+    #Get Extracted Foldername
     $FolderName = Get-ChildItem $FSLogixDestination |where name -like "FSLogix_Ap*" |Select-Object -ExpandProperty name
        
     #Installing//Updating FSLogix
