@@ -42,7 +42,7 @@
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/
         $RegPath = "HKLM:SYSTEM\CurrentControlSet\services\CtxUvi"
         $RegName = "UviProcessExcludes"
-        $EdgeRegvalue = "msedge.exe"
+        $EdgeRegvalue = "msedge.exe;msedgewebview2.exe"
 
         # Get current values in UviProcessExcludes
         $CurrentValues = Get-ItemProperty -Path $RegPath | Select-Object -ExpandProperty $RegName
