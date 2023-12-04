@@ -42,7 +42,8 @@
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/
         $RegPath = "HKLM:SYSTEM\CurrentControlSet\services\CtxUvi"
         $RegName = "UviProcessExcludes"
-        $EdgeRegvalue = "msedge.exe;msedgewebview2.exe"
+        $EdgeRegvalue = "msedge.exe;msedgewebview2.exe;msedgewebview"
+        # "msedgewebview" is added shortened as there is a 14 char limit on the process names. REF: https://support.citrix.com/article/CTX107825/how-to-disable-citrix-api-hooks-on-a-perapplication-basis
 
         # Get current values in UviProcessExcludes
         $CurrentValues = Get-ItemProperty -Path $RegPath | Select-Object -ExpandProperty $RegName
