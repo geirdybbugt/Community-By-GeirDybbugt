@@ -42,7 +42,7 @@
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/
         $RegPath = "HKLM:SYSTEM\CurrentControlSet\services\CtxUvi"
         $RegName = "UviProcessExcludes"
-        $EdgeRegvalue = "msedge.exe;msedgewebview2.exe;msedgewebview"
+        $EdgeRegvalue = "msedge.exe;msedgewebview2.exe;msedgewebview2"
         # "msedgewebview" is added shortened as there is a 14 char limit on the process names. REF: https://support.citrix.com/article/CTX107825/how-to-disable-citrix-api-hooks-on-a-perapplication-basis
 
         # Get current values in UviProcessExcludes
@@ -50,6 +50,20 @@
 
         # Add the msedge.exe value to existing values in UviProcessExcludes
         Set-ItemProperty -Path $RegPath -Name $RegName -Value "$CurrentValues$EdgeRegvalue;"
+
+        $RegPath = "HKLM:SOFTWARE\Citrix\CtxHook"
+        $RegName = "ExcludedImageNames"
+        $Values = "msedge.exe,msedgewebview2.exe"
+        New-ItemProperty -Path $RegPath -Name $RegName -PropertyType ExpandString -Value $Values
+
+        $RegPath = "HKLM:SOFTWARE\Wow6432Node\Citrix\CtxHook"
+        $RegName = "ExcludedImageNames"
+        New-ItemProperty -Path $RegPath -Name $RegName -PropertyType ExpandString -Value $Values
+
+        $RegPath = "HKLM:SOFTWARE\Wow6432Node\Citrix\CtxHook64"
+        $RegName = "ExcludedImageNames"
+        New-ItemProperty -Path $RegPath -Name $RegName -PropertyType ExpandString -Value $Values
+
 
 #Microsoft Edge post-install script
 #Source: https://virtualwarlock.net/microsoft-edge-in-citrix/
