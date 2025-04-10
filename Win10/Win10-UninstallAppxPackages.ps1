@@ -8,46 +8,51 @@
 # Uninstall Windows 10 preinstalled apps for current user 
 
 $appname = @(
-"*Print3D*"
-"*MixedReality.Portal*"
-"*SkypeApp*"
-"*XboxApp*"
-"*XboxGamingOverlay*"
-"*XboxGameOverlay*"
-"*XboxIdentityProvider*"
-"*XboxSpeech*"
-"*ZuneMusic*"
-"*XboxGameCall*"
-"*BingWeather*"
-"*GetStarted*"
-"*LinkedInforWindows*"
-"*FreshPaint*"
-"*Microsoft.Messaging*"
-"*MicrosoftSolitaireCollection*"
-"*MMicrosoft.MicrosoftStickyNotes*"
-"*Microsoft3dViewer*"
-"*Microsoft.People*"
-"*WindowsAlarms*"
-"*WindowsMaps*"
-"*Xbox.TCUI*"
-"*Microsoft.ZuneVideo*"
-"*Microsoft.YourPhone*"
-"*XboxGameCallableUI_*"
-"*Microsoft.GetHelp*"
-"*Microsoft.MSPaint*"
-"*Microsoft.OneConnect*"
-"*Microsoft.Wallet*"
-"*microsoft.windowscommunicationsapps*"
-"*Microsoft.WindowsFeedbackHub*"
-"*Microsoft.XboxSpeechToTextOverlay*"
+    "*Print3D*"
+    "*MixedReality.Portal*"
+    "*SkypeApp*"
+    "*XboxApp*"
+    "*XboxGamingOverlay*"
+    "*XboxGameOverlay*"
+    "*XboxIdentityProvider*"
+    "*XboxSpeech*"
+    "*ZuneMusic*"
+    "*XboxGameCall*"
+    "*BingWeather*"
+    "*GetStarted*"
+    "*LinkedInforWindows*"
+    "*FreshPaint*"
+    "*Microsoft.Messaging*"
+    "*MicrosoftSolitaireCollection*"
+    "*MMicrosoft.MicrosoftStickyNotes*"
+    "*Microsoft3dViewer*"
+    "*Microsoft.People*"
+    "*WindowsAlarms*"
+    "*WindowsMaps*"
+    "*Xbox.TCUI*"
+    "*Microsoft.ZuneVideo*"
+    "*Microsoft.YourPhone*"
+    "*XboxGameCallableUI_*"
+    "*Microsoft.GetHelp*"
+    "*Microsoft.MSPaint*"
+    "*Microsoft.OneConnect*"
+    "*Microsoft.Wallet*"
+    "*microsoft.windowscommunicationsapps*"
+    "*Microsoft.WindowsFeedbackHub*"
+    "*Microsoft.XboxSpeechToTextOverlay*"
+    "*Microsoft.Todos*"
+    "*Microsoft.MicrosoftStickyNotes*"
+    "*Microsoft.MicrosoftOfficeHub*"
+    "*Microsoft.BingNews*"
+    "*Microsoft.XboxGameCallableUI  *"
 )
 
-ForEach($app in $appname){
-Get-AppxPackage -Name $app | Remove-AppxPackage -ErrorAction SilentlyContinue
+ForEach ($app in $appname) {
+    Get-AppxPackage -Name $app | Remove-AppxPackage -ErrorAction SilentlyContinue
 }
 
 # Prevent the same apps from getting provisioned to other users on the computer
 
-ForEach($app in $appname){
-Get-AppxProvisionedPackage -Online | where {$_.PackageName -like $app} | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
+ForEach ($app in $appname) {
+    Get-AppxProvisionedPackage -Online | where { $_.PackageName -like $app } | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue
 }
