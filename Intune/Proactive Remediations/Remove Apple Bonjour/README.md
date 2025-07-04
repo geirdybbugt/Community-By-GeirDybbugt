@@ -10,7 +10,9 @@ You can get around this by adding it in registry (HKEY_LOCAL_MACHINE\SYSTEM\Curr
 around credential theft. 
 
 Some users states that installing Bonjour Print Services 2.0.2 gets around the issue, en even older version
+<br>
 : https://discussions.apple.com/thread/255869043?sortBy=rank
+<br>
 : 2.0.2 can be found here:
 <br>
 githttps://support.apple.com/en-us/106380
