@@ -9,13 +9,11 @@ The dll is regarded as untrusted by Windows Local Security Authoity (LSA), and i
 You can get around this by adding it in registry (HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa)
 But this is not a valid option, and decreases your device security around credential theft. 
 
-Some users states that installing Bonjour Print Services 2.0.2 gets around the issue, en even older version
+Some users states that installing Bonjour Print Services 2.0.2 gets around the issue, en even older version:
+https://discussions.apple.com/thread/255869043?sortBy=rank
 
-: https://discussions.apple.com/thread/255869043?sortBy=rank
-
-: 2.0.2 can be found here:
-
-githttps://support.apple.com/en-us/106380
+2.0.2 can be found here:
+https://support.apple.com/en-us/106380
 
 If you do not need Bonjour, it is a better option to remove it. 
 So in this folder is a remediation script to be used to remove it on detected devices. 
