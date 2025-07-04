@@ -3,9 +3,9 @@
 After Windows 11 24H2 users  may get a popup from program compatability assistant that the module mdnsNSP.dll is blocked from loading.\
 THe module is a part of Apple Bonjour, typically used for printers, airplay features etc looking for devices on the network.\
 It may be installed by other sofware using the component.\
-This dll is also known to be exploited. THere is no newer version of Bonjour.\
+This dll is also known to be exploited. THere is no newer version of Bonjour.
 
-The dll is regarded as untrusted by Windows Local Security Authoity (LSA), and is blocked from loading.\
+The dll is regarded as untrusted by Windows Local Security Authoity (LSA), and is blocked from loading.
 
 You can get around this by adding it in registry (HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa)\
 But this is not a valid option, and decreases your device security around credential theft. 
